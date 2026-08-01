@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Estacionamento {
 
+    // teste
+    // teste 2
+    // branch feature
     private List<Vaga> vagas;
     private List<RegistroEstacionamento> registros;
     private double precoPorHora;

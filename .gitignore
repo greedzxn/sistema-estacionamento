@@ -1,0 +1,24 @@
+# Java
+*.class
+bin/
+build/
+out/
+target/
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

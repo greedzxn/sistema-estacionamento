@@ -21,6 +21,13 @@ public class RegistroEstacionamento {
         this.valorPago = 0;
     }
 
+    public RegistroEstacionamento(Veiculo veiculo, int numeroVaga, LocalDateTime entrada, LocalDateTime saida,
+            double valorPago) {
+        this(veiculo, numeroVaga, entrada);
+        this.saida = saida;
+        this.valorPago = valorPago;
+    }
+
     public boolean estaAberto() {
         if (saida == null) {
             return true;

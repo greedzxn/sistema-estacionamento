@@ -19,7 +19,7 @@ public class EstacionamentoRepository {
 
     public void salvarVagas(List<Vaga> vagas) {
 
-        try (BufferedReader writer = new BufferedWriter(new FileWriter(ARQUIVO_VAGAS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_VAGAS))) {
 
             for (Vaga vaga : vagas) {
 
@@ -29,12 +29,11 @@ public class EstacionamentoRepository {
 
             }
         } catch (Exception e) {
-            throw new IllegalStateException("Não foi possível salvar a lista.", e);
+            throw new IllegalStateException("Não foi possível salvar as vagas.", e);
         }
     }
 
     public List<Vaga> carregarVagas() {
-        List<Vaga> vagas = new ArrayList<>();
 
         try (Stream<String> linhas = Files.lines(Path.of(ARQUIVO_VAGAS))) {
 
@@ -42,8 +41,8 @@ public class EstacionamentoRepository {
                     .map(linha -> {
                         String[] dados = linha.split(";");
 
-                        int numero = Integer.valueOf(dados[0]);
-                        String tipo = dados[1];
+                        int numero = Integer.parseInt(dados[0]);
+                        TipoVeiculo tipo = TipoVeiculo.parse(dados[1]);
 
                         return new Vaga(numero, tipo);
                     })
@@ -54,7 +53,6 @@ public class EstacionamentoRepository {
             return new ArrayList<>();
         }
 
-        return vagas;
     }
 
     public void salvarRegistros(List<RegistroEstacionamento> registros) {
@@ -66,7 +64,7 @@ public class EstacionamentoRepository {
                         + registro.getEntrada();
 
                 if (registro.estaAberto()) {
-                    linha += ";0";
+                    linha += ";;0";
                 } else {
                     linha += registro.getSaida() + ";" + registro.getValorPago();
                 }
@@ -80,26 +78,33 @@ public class EstacionamentoRepository {
     }
 
     public List<RegistroEstacionamento> carregarRegistros() {
-        List<RegistroEstacionamento> registros = new ArrayList<>();
 
-        try (Stream<string> linhas = Files.lines(Path.of(ARQUIVO_REGISTROS))) {
+        try (Stream<String> linhas = Files.lines(Path.of(ARQUIVO_REGISTROS))) {
             return linhas
                     .map(linha -> {
                         String[] dados = linha.split(";");
 
                         String placa = dados[0];
                         String modelo = dados[1];
-                        String tipo = dados[2];
-                        int numeroVaga = Integer.valueOf(dados[3]);
-                        LocalDateTime entrada = LocalDateTime.parse(dados[4]);
-                        LocalDateTime saida = LocalDateTime.parse(dados[5]);
-                        double valorPago = Double.valueOf(dados[6]);
+                        TipoVeiculo tipo = TipoVeiculo.valueOf(dados[2]);
+                        int numeroVaga = Integer.parseInt(dados[3]);
 
                         Veiculo veiculo = new Veiculo(placa, modelo, tipo);
 
-                        return new RegistroEstacionamento(veiculo, numeroVaga, entrada, saida, valorPago);
+                        LocalDateTime entrada = LocalDateTime.parse(dados[4]);
+
+                        String saida = dados[5];
+                        if (saida.isEmpty()) {
+                            return new RegistroEstacionamenFto(veiculo, numeroVaga, entrada);
+                        } else {
+                            LocalDateTime saidaDateTime = LocalDateTime.parse(dados[5]);
+                            double valorPago = Double.parseDouble(dados[6]);
+                            return new RegistroEstacionamento(veiculo, numeroVaga, entrada, saidaDateTime, valorPago);
+                        }
+
                     })
                     .toList();
+
         } catch (IOException e) {
             throw new IllegalStateException("Não foi possível carregar a lista.", e);
         }

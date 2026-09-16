@@ -69,7 +69,7 @@ public class Estacionamento {
 
     public RegistroEstacionamento estacionar(Veiculo veiculo) {
         if (veiculo == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("O veículo não pode ser nulo");
         }
 
         for (RegistroEstacionamento registro : registros) {
@@ -233,5 +233,30 @@ public class Estacionamento {
         }
 
         return faturamento;
+    }
+
+    public void carregarRegistro(RegistroEstacionamento registro) {
+        if (registro == null) {
+            throw new IllegalArgumentException("O registro não pode ser nulo");
+        }
+
+        registros.add(registro);
+
+        if (registro.estaAberto()) {
+
+            boolean encontrouVaga = false;
+            int numeroVaga = registro.getNumeroVaga();
+            for (Vaga vaga : this.vagas) {
+                if (vaga.getNumero() == numeroVaga) {
+                    vaga.ocupar(registro.getVeiculo());
+                    encontrouVaga = true;
+                    break;
+                }
+            }
+
+            if (!encontrouVaga) {
+                throw new IllegalStateException("Não foi possível encontrar a vaga");
+            }
+        }
     }
 }

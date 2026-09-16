@@ -1,8 +1,6 @@
 package estacionamento;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +40,7 @@ public class EstacionamentoRepository {
                         String[] dados = linha.split(";");
 
                         int numero = Integer.parseInt(dados[0]);
-                        TipoVeiculo tipo = TipoVeiculo.parse(dados[1]);
+                        TipoVeiculo tipo = TipoVeiculo.valueOf(dados[1]);
 
                         return new Vaga(numero, tipo);
                     })
@@ -95,7 +93,7 @@ public class EstacionamentoRepository {
 
                         String saida = dados[5];
                         if (saida.isEmpty()) {
-                            return new RegistroEstacionamenFto(veiculo, numeroVaga, entrada);
+                            return new RegistroEstacionamento(veiculo, numeroVaga, entrada);
                         } else {
                             LocalDateTime saidaDateTime = LocalDateTime.parse(dados[5]);
                             double valorPago = Double.parseDouble(dados[6]);

@@ -80,17 +80,17 @@ public class RegistroEstacionamento {
     @Override
     public String toString() {
         if (estaAberto()) {
-            return veiculo.getPlaca() + " - Vaga " + numeroVaga + " - Entrada: " + entrada.format(FORMATO_DATA)
-                    + " EM ABERTO";
+            return veiculo.getPlaca() + " - Vaga " + numeroVaga + "\nEntrada: " + entrada.format(FORMATO_DATA)
+                    + "\nEM ABERTO";
         } else {
             NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
             String valorFormatado = formatador.format(valorPago);
 
-            return veiculo.getPlaca() + " - Vaga " + numeroVaga + " - Entrada: " + entrada.format(FORMATO_DATA)
-                    + "\n Saida: "
+            return veiculo.getPlaca() + " - Vaga " + numeroVaga + "\nEntrada: " + entrada.format(FORMATO_DATA)
+                    + "\nSaida: "
                     + saida.format(FORMATO_DATA)
-                    + " - Valor: " + valorFormatado;
+                    + "\nValor: " + valorFormatado;
         }
     }
 }

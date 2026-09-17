@@ -50,8 +50,8 @@ public class Menu {
                     break;
 
                 case 0:
-                    // repositorio.salvarVagas(estacionamento.getVagas());
-                    // repositorio.salvarRegistros(estacionamento.getRegistros());
+                    repositorio.salvarVagas(estacionamento.getVagas());
+                    repositorio.salvarRegistros(estacionamento.getRegistros());
                     return;
 
                 default:
@@ -72,7 +72,13 @@ public class Menu {
 
         Veiculo veiculo = new Veiculo(placa, modelo, tipoVeiculo);
 
-        estacionamento.estacionar(veiculo);
+        try {
+            estacionamento.estacionar(veiculo);
+            System.out.println("Seu veículo foi estacionado com sucesso!");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Não foi possível estacionar o veículo");
+            System.out.println(e.getMessage());
+        }
     }
 
     private void retirarVeiculo() {
@@ -92,18 +98,35 @@ public class Menu {
     }
 
     private void listarVagas() {
-        List<Vaga> vagasLivres = estacionamento.listarVagasLivres();
 
-        System.out.println("Vagas livres:");
+        List<Vaga> vagasLivres = estacionamento.listarVagasLivres();
+        List<Vaga> vagasOcupadas = estacionamento.listarVagasOcupadas();
+
+        System.out.println("========== VAGAS ==========");
+
+        System.out.println("Livres:");
         for (Vaga vaga : vagasLivres) {
             System.out.println(vaga);
-        }
 
-        // mostrar vagas
+        }
+        System.out.println("\nOcupadas:");
+        for (Vaga vaga : vagasOcupadas) {
+            System.out.println(vaga);
+        }
     }
 
     private void listarRegistros() {
-        // mostrar registros
+
+        List<RegistroEstacionamento> registros = estacionamento.listarHistorico();
+
+        System.out.println("========== REGISTROS ==========");
+
+        if (registros.isEmpty()) {
+            System.out.println("\nNão há registros");
+        }
+        for (RegistroEstacionamento registro : registros) {
+            System.out.println(registro);
+        }
     }
 
 }

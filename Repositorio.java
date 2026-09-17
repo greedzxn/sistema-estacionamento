@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class EstacionamentoRepository {
+public class Repositorio {
 
     private static final String ARQUIVO_VAGAS = "vagas.txt";
     private static final String ARQUIVO_REGISTROS = "registros.txt";

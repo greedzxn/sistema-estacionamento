@@ -5,6 +5,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import estacionamento.RegistroEstacionamento;
+
 public class Estacionamento {
 
     private List<Vaga> vagas;
@@ -258,5 +260,13 @@ public class Estacionamento {
                 throw new IllegalStateException("Não foi possível encontrar a vaga");
             }
         }
+    }
+
+    public List<Vaga> getVagas() {
+        return this.vagas;
+    }
+
+    public List<RegistroEstacionamento> getRegistros() {
+        return this.registros;
     }
 }

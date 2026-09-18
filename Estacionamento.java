@@ -5,8 +5,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import estacionamento.RegistroEstacionamento;
-
 public class Estacionamento {
 
     private List<Vaga> vagas;

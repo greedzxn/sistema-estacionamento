@@ -52,6 +52,18 @@ public class Menu {
                     listarRegistros();
                     break;
 
+                case 5:
+                    consultarVaga();
+                    break;
+
+                case 6:
+                    listarVeiculosEstacionados();
+                    break;
+
+                case 7:
+                    mostrarFaturamento();
+                    break;
+
                 case 0:
                     repositorio.salvarVagas(estacionamento.getVagas());
                     repositorio.salvarRegistros(estacionamento.getRegistros());
@@ -64,6 +76,8 @@ public class Menu {
     }
 
     private void estacionarVeiculo() {
+
+        System.out.println("========== ESTACIONAR VEÍCULO ==========\n");
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine().toUpperCase();
 
@@ -85,6 +99,8 @@ public class Menu {
     }
 
     private void retirarVeiculo() {
+
+        System.out.println("========== RETIRAR VEÍCULO ==========\n");
         System.out.print("Digite a placa do veículo a ser retirado: ");
         String placa = scanner.nextLine();
 
@@ -105,7 +121,7 @@ public class Menu {
         List<Vaga> vagasLivres = estacionamento.listarVagasLivres();
         List<Vaga> vagasOcupadas = estacionamento.listarVagasOcupadas();
 
-        System.out.println("========== VAGAS ==========");
+        System.out.println("========== VAGAS ==========\n");
 
         System.out.println("Livres:");
         for (Vaga vaga : vagasLivres) {
@@ -123,10 +139,10 @@ public class Menu {
 
         List<RegistroEstacionamento> registros = estacionamento.listarHistorico();
 
-        System.out.println("========== REGISTROS ==========");
+        System.out.println("========== REGISTROS ==========\n");
 
         if (registros.isEmpty()) {
-            System.out.println("\nNão há registros\n");
+            System.out.println("Não há registros\n");
             return;
         }
 
@@ -136,8 +152,10 @@ public class Menu {
     }
 
     private void consultarVaga() {
+
+        System.out.println("========== CONSULTAR VAGA ==========\n");
         System.out.print("Digite o número da vaga para consulta: ");
-        Vaga vaga = estacionamento.buscarVagaPorNumero(scanner.nextInt());
+        Vaga vaga = estacionamento.buscarVagaPorNumero(Integer.parseInt(scanner.nextLine()));
 
         if (vaga.estaLivre()) {
             System.out.println("A vaga " + vaga.getNumero() + " está livre!\n");
@@ -148,18 +166,25 @@ public class Menu {
     }
 
     private void listarVeiculosEstacionados() {
+
         List<Vaga> vagas = estacionamento.listarVagasOcupadas();
 
+        System.out.println("========== // ==========\n");
         System.out.println("Veículos estacionados:");
 
         for (Vaga vaga : vagas) {
-            System.out.println(vaga.getVeiculo().getModelo());
+            System.out.println("Vaga " + vaga.getNumero() + ": " + vaga.getVeiculo().getModelo() + " - "
+                    + vaga.getVeiculo().getPlaca());
         }
-        System.out.println("");
+        System.out.println();
+
     }
 
     private void mostrarFaturamento() {
-        System.out.println("========== FATURAMENTO ==========");
-        System.out.println("\nR$: " + estacionamento.calcularFaturamento() + "\n");
+
+        System.out.println("========== FATURAMENTO ==========\n");
+        System.out.println("Total faturado: R$" + estacionamento.calcularFaturamento());
+        System.out.println();
+
     }
 }

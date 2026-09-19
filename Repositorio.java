@@ -33,7 +33,13 @@ public class Repositorio {
 
     public List<Vaga> carregarVagas() {
 
-        try (Stream<String> linhas = Files.lines(Path.of(ARQUIVO_VAGAS))) {
+        Path path = Path.of(ARQUIVO_VAGAS);
+
+        if (!Files.exists(path)) {
+            return new ArrayList<>();
+        }
+
+        try (Stream<String> linhas = Files.lines(path)) {
 
             return linhas
                     .map(linha -> {
@@ -77,7 +83,13 @@ public class Repositorio {
 
     public List<RegistroEstacionamento> carregarRegistros() {
 
-        try (Stream<String> linhas = Files.lines(Path.of(ARQUIVO_REGISTROS))) {
+        Path path = Path.of(ARQUIVO_REGISTROS);
+
+        if (!Files.exists(path)) {
+            return new ArrayList<>();
+        }
+
+        try (Stream<String> linhas = Files.lines(path)) {
             return linhas
                     .map(linha -> {
                         String[] dados = linha.split(";");

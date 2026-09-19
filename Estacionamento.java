@@ -169,8 +169,7 @@ public class Estacionamento {
             return vagasLivres;
         }
 
-        System.out.println("Não há vagas livres");
-        return null;
+        return new ArrayList<>();
     }
 
     public List<Vaga> listarVagasOcupadas() {
@@ -186,8 +185,7 @@ public class Estacionamento {
             return vagasOcupadas;
         }
 
-        System.out.println("Não há vagas ocupadas");
-        return null;
+        return new ArrayList<>();
     }
 
     public List<RegistroEstacionamento> listarHistorico() {

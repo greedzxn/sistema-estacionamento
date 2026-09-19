@@ -123,16 +123,30 @@ public class Menu {
 
         System.out.println("========== VAGAS ==========\n");
 
-        System.out.println("Livres:");
-        for (Vaga vaga : vagasLivres) {
-            System.out.println(vaga);
+        if (vagasLivres.isEmpty() && vagasOcupadas.isEmpty()) {
+            System.out.println("Não há vagas livres nem ocupadas");
+            return;
+        }
 
+        if (vagasLivres.isEmpty()) {
+            System.out.println("Não há vagas livres");
+        } else {
+            System.out.println("Livres:");
+            for (Vaga vaga : vagasLivres) {
+                System.out.println(vaga);
+
+            }
         }
-        System.out.println("\nOcupadas:");
-        for (Vaga vaga : vagasOcupadas) {
-            System.out.println(vaga);
+
+        if (vagasOcupadas.isEmpty()) {
+            System.out.println("Não há vagas ocupadas");
+        } else {
+            System.out.println("\nOcupadas:");
+            for (Vaga vaga : vagasOcupadas) {
+                System.out.println(vaga);
+            }
         }
-        System.out.println("");
+
     }
 
     private void listarRegistros() {

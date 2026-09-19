@@ -29,10 +29,12 @@ public class Menu {
             System.out.println("7. Mostrar faturamento");
             System.out.println("0. Salvar e sair");
             System.out.println("====================================");
+            System.out.println();
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
+            System.out.println();
 
             switch (opcao) {
 
@@ -103,16 +105,17 @@ public class Menu {
         System.out.println("========== RETIRAR VEÍCULO ==========\n");
         System.out.print("Digite a placa do veículo a ser retirado: ");
         String placa = scanner.nextLine();
+        System.out.println();
 
         try {
 
             double valor = estacionamento.retirarVeiculo(placa);
             System.out.println("Veículo retirado com sucesso");
-            System.out.println("Valor a ser pago: R$ " + valor + "\n");
+            System.out.println("Valor a ser pago: R$ " + valor);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Não foi possível retirar o veículo");
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("Motivo: " + e.getMessage());
         }
     }
 
@@ -156,7 +159,7 @@ public class Menu {
         System.out.println("========== REGISTROS ==========\n");
 
         if (registros.isEmpty()) {
-            System.out.println("Não há registros\n");
+            System.out.println("Não há registros para serem listados");
             return;
         }
 
@@ -171,10 +174,17 @@ public class Menu {
         System.out.print("Digite o número da vaga para consulta: ");
         Vaga vaga = estacionamento.buscarVagaPorNumero(Integer.parseInt(scanner.nextLine()));
 
+        System.out.println();
+
+        if (vaga == null) {
+            System.out.println("A vaga informada não existe");
+            return;
+        }
+
         if (vaga.estaLivre()) {
-            System.out.println("A vaga " + vaga.getNumero() + " está livre!\n");
+            System.out.println("A vaga " + vaga.getNumero() + " está livre!");
         } else {
-            System.out.println("A vaga " + vaga.getNumero() + " está ocupada\n");
+            System.out.println("A vaga " + vaga.getNumero() + " está ocupada");
         }
 
     }
@@ -184,13 +194,17 @@ public class Menu {
         List<Vaga> vagas = estacionamento.listarVagasOcupadas();
 
         System.out.println("========== // ==========\n");
+
+        if (vagas.isEmpty()) {
+            System.out.println("Não há vagas ocupadas");
+            return;
+        }
         System.out.println("Veículos estacionados:");
 
         for (Vaga vaga : vagas) {
             System.out.println("Vaga " + vaga.getNumero() + ": " + vaga.getVeiculo().getModelo() + " - "
                     + vaga.getVeiculo().getPlaca());
         }
-        System.out.println();
 
     }
 
@@ -198,7 +212,6 @@ public class Menu {
 
         System.out.println("========== FATURAMENTO ==========\n");
         System.out.println("Total faturado: R$" + estacionamento.calcularFaturamento());
-        System.out.println();
 
     }
 }
